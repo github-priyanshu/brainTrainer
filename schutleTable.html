@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schutle Table</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js"></script>
+  <style>
+    body{
+      background: #111;
+      min-height: 100vh;
+    }
+    .schBox{
+      width: 100%;
+
+    }
+
+    #sch{
+      text-align: center;
+      font-family: monospace;
+      width: 400px;
+      aspect-ratio: 1/1;
+      display: flex;
+      flex-flow: row wrap;
+    }
+    #sch .schSm{
+      width: 80px;
+      aspect-ratio: 1/1;
+      border: 1px solid #444;
+      font-size: 3em;
+    }
+  </style>
+</head>
+
+<body class="flex">
+
+  <div class="schBox flex c">
+    <div class="hint flex c" col="#fff">
+      <p>FIND</p>
+      <div class="fndNum" fs="2em">1</div>
+    </div>
+    <div class="lineMargin" w="100px" h="1px" bg="#333" m="19px"></div>
+
+    <div id="sch">
+    </div>
+    <div class="lineMargin" w="100px" h="1px" bg="#333" m="19px"></div>
+    <div class="timer" col="#fff">00</div>
+
+  </div>
+
+  <script>
+    resetFormat();
+    var sch=op("#sch");
+    var speed=op("#speed");
+    var toFnd=op('.fndNum')
+
+
+    applySch();
+    function applySch() {
+      var num=[];for(let i=1;i<=25; i++){num.push(i)};
+      var html=``;
+
+      var colors="pink,skyblue,red,white,yellow,orange".split(',');
+
+      for(let val=1; val<=25; val++){
+        var n=num.splice(Math.floor(Math.random()*num.length),1),
+        col=colors[Math.floor(Math.random()*colors.length)];
+        log(num)
+        html+=`<div onclick="changeToFnd(this)" class="schSm flex" style="color: ${col};"><span>${n}</span></div>`;
+        startTimer(op('.timer'));
+      }
+      sch.innerHTML=(html);
+    }
+
+    function changeToFnd(e) {
+      toFnd.innerText=Number(e.innerText)+1;
+    }
+
+function startTimer(domElement) {
+  let hours = 0;
+  let minutes = 0;
+  let seconds = 0;
+  const interval = setInterval(() => {
+    seconds++;
+    if (seconds >= 60) {
+      seconds = 0;
+      minutes++;
+      if (minutes >= 60) {
+        minutes = 0;
+        hours++;
+      }
+    }
+    const formattedTime = formatTime(hours, minutes, seconds);
+    domElement.innerText = formattedTime;
+  }, 10); // 10 milliseconds = 1/100 of a second
+
+  // Example stop function to clear the interval if needed
+  function stopTimer() {
+    clearInterval(interval);
+  }
+
+  // Helper function to format the time as '00:00:00'
+  function formatTime(hours, minutes, seconds) {
+    const formattedHours = padZero(hours);
+    const formattedMinutes = padZero(minutes);
+    const formattedSeconds = padZero(seconds);
+    return `${formattedHours}:${formattedMinutes}.${formattedSeconds}`;
+  }
+
+  // Helper function to pad single digits with a leading zero
+  function padZero(num) {
+    return num.toString().padStart(2, '0');
+  }
+
+  // Example usage:
+  // startTimer(document.getElementById('timer'));
+  // Uncomment the line above and replace 'timer' with the id of your DOM element to start the timer
+}
+
+  </script>
+</body>
+</html>

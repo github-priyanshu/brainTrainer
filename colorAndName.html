@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color & Name</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js"></script>
+  <style>
+    body{
+      background: #111;
+      min-height: 100vh;
+    }
+    .colTextBox{
+      width: 100%;
+
+    }
+
+    #colName{
+      font-size: 5em;
+      color: #fff;
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+      font-family: monospace;
+      height: 50vh;
+      font-weight: bolder;
+    }
+  </style>
+</head>
+
+<body class="flex">
+
+  <div class="colTextBox flex c">
+    <input id="speed" type="range" min="5" max="20" value="15">
+    <div class="lineMargin" w="100px" h="1px" bg="#333" m="19px"></div>
+    <div id="colName">Yellow</div>
+
+  </div>
+
+  <script>
+    resetFormat();
+    var colName=op("#colName");
+    var speed=op("#speed");
+
+    class colorAndT{
+      colors="blue,green,red,white,yellow,orange".split(',');
+
+      constructor(){
+        var text=this.colors[Math.floor(Math.random()*this.colors.length)];
+        var col=this.colors[Math.floor(Math.random()*this.colors.length)];
+        return [text,col,text.length];
+      }
+    }
+
+    applycoltext();
+    function applycoltext() {
+
+      setTimeout(()=>{
+        applycoltext();
+      },speed.value*100);
+
+      var data=new colorAndT();
+      colName.innerText=data[0];
+      colName.style.color=data[1];
+      colName.style.fontSize=window.innerWidth/data[2]+'px';
+    }
+
+
+    log(new colorAndT());
+  </script>
+</body>
+</html>
